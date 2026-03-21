@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<!-- LOADING -->
+<!-- LOADING SPINNER -->
 <div id="loading" class="loading">Loading...</div>
 
 <!-- LOGIN -->
@@ -18,7 +18,7 @@
     <input id="username" placeholder="Username" required>
     <label for="password">Password</label>
     <input id="password" type="password" placeholder="Password" required>
-    <button onclick="login()">Login</button>
+    <button id="loginBtn">Login</button>
     <p id="msg" class="msg"></p>
 </div>
 
@@ -26,70 +26,76 @@
 <div id="dashboard" style="display:none;">
     <div class="topbar">
         <h2>Dashboard</h2>
-        <button onclick="logout()">Logout</button>
+        <button id="logoutBtn">Logout</button>
     </div>
 
     <div class="nav">
-        <button onclick="showSection('customers')">Customers</button>
-        <button onclick="showSection('leads')">Leads</button>
-        <button onclick="showSection('addCustomer')">Add Customer</button>
-        <button onclick="showSection('addLead')">Add Lead</button>
-        <button onclick="showSection('invoice')">Invoices</button>
+        <button class="nav-btn" data-section="customers">Customers</button>
+        <button class="nav-btn" data-section="leads">Leads</button>
+        <button class="nav-btn" data-section="addCustomer">Add Customer</button>
+        <button class="nav-btn" data-section="addLead">Add Lead</button>
+        <button class="nav-btn" data-section="invoice">Invoices</button>
     </div>
 
-    <!-- CUSTOMERS -->
+    <!-- CUSTOMER SECTION -->
     <div id="customers" class="section">
         <h3>Customers</h3>
-        <button onclick="loadCustomers()">Refresh</button>
+        <button id="refreshCustomers">Refresh</button>
         <div id="customerTable"></div>
     </div>
 
-    <!-- LEADS -->
+    <!-- LEADS SECTION -->
     <div id="leads" class="section" style="display:none;">
         <h3>Leads</h3>
-        <button onclick="loadLeads()">Refresh</button>
+        <button id="refreshLeads">Refresh</button>
         <div id="leadTable"></div>
     </div>
 
-    <!-- ADD CUSTOMER -->
+    <!-- ADD CUSTOMER SECTION -->
     <div id="addCustomer" class="section" style="display:none;">
         <h3>Add Customer</h3>
-        <input id="c_fn" placeholder="First Name" required>
-        <input id="c_ln" placeholder="Last Name" required>
-        <input id="c_phone" placeholder="Phone" required>
-        <input id="c_email" placeholder="Email">
-        <input id="c_address" placeholder="Address">
-        <input id="c_city" placeholder="City">
-        <input id="c_state" placeholder="State">
-        <input id="c_zip" placeholder="Zip">
-        <input id="c_service" placeholder="Service">
-        <input id="c_plan" placeholder="Plan">
-        <input id="c_freq" placeholder="Frequency">
-        <input id="c_price" placeholder="Price">
-        <button onclick="addCustomer()">Save Customer</button>
+        <form id="addCustomerForm">
+            <input name="first_name" placeholder="First Name" required>
+            <input name="last_name" placeholder="Last Name" required>
+            <input name="phone" placeholder="Phone" required>
+            <input name="email" placeholder="Email">
+            <input name="address" placeholder="Address">
+            <input name="city" placeholder="City">
+            <input name="state" placeholder="State">
+            <input name="zip" placeholder="Zip">
+            <input name="service_type" placeholder="Service Type">
+            <input name="plan_type" placeholder="Plan Type">
+            <input name="frequency" placeholder="Frequency">
+            <input name="price" placeholder="Price">
+            <button type="submit">Save Customer</button>
+        </form>
     </div>
 
-    <!-- ADD LEAD -->
+    <!-- ADD LEAD SECTION -->
     <div id="addLead" class="section" style="display:none;">
         <h3>Add Lead</h3>
-        <input id="l_name" placeholder="Name" required>
-        <input id="l_phone" placeholder="Phone" required>
-        <input id="l_email" placeholder="Email" required>
-        <input id="l_address" placeholder="Address">
-        <input id="l_city" placeholder="City">
-        <input id="l_state" placeholder="State">
-        <input id="l_zip" placeholder="Zip">
-        <input id="l_rep" placeholder="Assigned Rep">
-        <button onclick="addLead()">Save Lead</button>
+        <form id="addLeadForm">
+            <input name="name" placeholder="Name" required>
+            <input name="phone" placeholder="Phone" required>
+            <input name="email" placeholder="Email">
+            <input name="address" placeholder="Address">
+            <input name="city" placeholder="City">
+            <input name="state" placeholder="State">
+            <input name="zip" placeholder="Zip">
+            <input name="assigned_rep" placeholder="Assigned Rep">
+            <button type="submit">Save Lead</button>
+        </form>
     </div>
 
-    <!-- INVOICES -->
+    <!-- INVOICE SECTION -->
     <div id="invoice" class="section" style="display:none;">
         <h3>Create Invoice</h3>
-        <input id="inv_customer" placeholder="Customer ID" required>
-        <input id="inv_job" placeholder="Job ID" required>
-        <input id="inv_amount" placeholder="Amount" required>
-        <button onclick="createInvoice()">Generate Invoice</button>
+        <form id="createInvoiceForm">
+            <input name="customer_id" placeholder="Customer ID" required>
+            <input name="job_id" placeholder="Job ID">
+            <input name="amount" placeholder="Amount" required>
+            <button type="submit">Generate Invoice</button>
+        </form>
     </div>
 </div>
 
