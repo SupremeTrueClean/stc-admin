@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background: white;
+    background: #f8f9fa;
     margin: 0;
     padding: 0;
 }
@@ -27,14 +27,22 @@ button {
     border: none;
     padding: 10px;
     border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: darkred;
 }
 
 input {
     display: block;
-    margin: 5px 0;
+    margin: 10px 0;
     padding: 10px;
-    width: 100%;
+    width: calc(100% - 20px);
     max-width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
 .section {
@@ -45,17 +53,12 @@ input {
     background: white;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .center {
     margin: 100px auto;
-    max-width: 300px;
-}
-
-.msg {
-    color: red;
-    margin-top: 10px;
+    max-width: 400px;
 }
 
 .loading {
@@ -66,4 +69,9 @@ input {
     transform: translate(-50%, -50%);
     font-size: 1.5em;
     color: red;
+}
+
+.msg {
+    color: red;
+    margin-top: 10px;
 }
