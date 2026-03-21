@@ -1,120 +1,57 @@
-const API = "https://your-secure-backend-or-script-url";
+/**
+ * Supreme True Clean Admin Dashboard
+ * Live Front-End URL: https://supremetrueclean.github.io/stc-admin/ 
+ * Backend API URL: https://script.google.com/macros/s/AKfycbwbsIbTh9xaHf1KJ_olyRBhBsp-h7rE9gfd5GvqSfy29NyyzDNF7iadLtzFmPkRaGWu3A/exec
+ */
 
-// ======= SHOW/HIDE LOADING =======
-function showLoading(show) {
+const API_KEY = "STC123SecureKey"; // API Key for secure communication with the backend
+const API_URL = "https://script.google.com/macros/s/AKfycbwbsIbTh9xaHf1KJ_olyRBhBsp-h7rE9gfd5GvqSfy29NyyzDNF7iadLtzFmPkRaGWu3A/exec"; // Google Apps Script Backend API URL
+
+// Helper Function: Toggle Loading Spinner
+function toggleLoading(show) {
     document.getElementById("loading").style.display = show ? "block" : "none";
 }
 
-// ======= LOGIN FUNCTION =======
-async function login() {
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value.trim();
+// Function: Login
+document.getElementById("loginBtn").addEventListener("click", async () => {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
 
-    showLoading(true);
+    toggleLoading(true);
     try {
-        const response = await fetch(API, {
+        const response = await fetch(API_URL, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ action: "login", username, password }),
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                action: "login",
+                username,
+                password,
+                api_key: API_KEY
+            }),
         });
 
-        const result = await response.json();
-
-        if (result.status === "success") {
-            document.getElementById("loginBox").style.display = "none";
-            document.getElementById("dashboard").style.display = "block";
+        const data = await response.json();
+        if (data.status === "success") {
+            toggleDashboard(true);
         } else {
-            document.getElementById("msg").innerText = result.message || "Invalid Credentials";
+            document.getElementById("msg").innerText = data.message || "Login failed";
         }
     } catch (error) {
         console.error("Login Error:", error);
-        document.getElementById("msg").innerText = "Connection Error. Try again later.";
     } finally {
-        showLoading(false);
+        toggleLoading(false);
     }
+});
+
+// Function: Toggle Dashboard Visibility
+function toggleDashboard(show) {
+    document.getElementById("loginBox").style.display = show ? "none" : "block";
+    document.getElementById("dashboard").style.display = show ? "block" : "none";
 }
 
-// ======= LOGOUT FUNCTION =======
-function logout() {
-    location.reload();
-}
-
-// ======= ADD CUSTOMER FUNCTION =======
-async function addCustomer() {
-    const payload = {
-        action: "addCustomer",
-        first_name: document.getElementById("c_fn").value.trim(),
-        last_name: document.getElementById("c_ln").value.trim(),
-        phone: document.getElementById("c_phone").value.trim(),
-        email: document.getElementById("c_email").value.trim(),
-        address: document.getElementById("c_address").value.trim(),
-        city: document.getElementById("c_city").value.trim(),
-        state: document.getElementById("c_state").value.trim(),
-        zip: document.getElementById("c_zip").value.trim(),
-        service_type: document.getElementById("c_service").value.trim(),
-        plan_type: document.getElementById("c_plan").value.trim(),
-        frequency: document.getElementById("c_freq").value.trim(),
-        price: document.getElementById("c_price").value.trim(),
-    };
-
-    showLoading(true);
-    try {
-        const response = await fetch(API, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
-        });
-
-        const result = await response.json();
-
-        if (result.status === "success") {
-            alert("✅ Customer Added!");
-            // Clear form inputs
-            document.getElementById("addCustomer").querySelectorAll("input").forEach(input => input.value = "");
-        } else {
-            alert("❌ Error Adding Customer!");
-        }
-    } catch (error) {
-        console.error("Add Customer Error:", error);
-        alert("❌ Error Adding Customer!");
-    } finally {
-        showLoading(false);
-    }
-}
-
-// ======= ADD LEAD FUNCTION =======
-async function addLead() {
-    const payload = {
-        action: "addLead",
-        name: document.getElementById("l_name").value.trim(),
-        phone: document.getElementById("l_phone").value.trim(),
-        email: document.getElementById("l_email").value.trim(),
-        address: document.getElementById("l_address").value.trim(),
-        city: document.getElementById("l_city").value.trim(),
-        state: document.getElementById("l_state").value.trim(),
-        zip: document.getElementById("l_zip").value.trim(),
-        assigned_rep: document.getElementById("l_rep").value.trim(),
-    };
-
-    showLoading(true);
-    try {
-        const response = await fetch(API, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
-        });
-
-        const result = await response.json();
-
-        if (result.status === "success") {
-            alert("✅ Lead Added!");
-        } else {
-            alert("❌ Error Adding Lead!");
-        }
-    } catch (error) {
-        console.error("Add Lead Error:", error);
-        alert("❌ Error Adding Lead!");
-    } finally {
-        showLoading(false);
-    }
-}
+// Logout Button Handler
+document.getElementById("logoutBtn").addEventListener("click", () => {
+    toggleDashboard(false);
+});
