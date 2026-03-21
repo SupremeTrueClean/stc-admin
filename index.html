@@ -1,100 +1,94 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>STC Admin Dashboard</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STC Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
 <!-- LOGIN -->
+<div id="loading" class="loading">Loading...</div>
 <div id="loginBox" class="card center">
-<h1>Supreme True Clean</h1>
-<input id="username" placeholder="Username">
-<input id="password" type="password" placeholder="Password">
-<button onclick="login()">Login</button>
-<p id="msg"></p>
+    <h1>Supreme True Clean</h1>
+    <label for="username">Username</label>
+    <input id="username" placeholder="Username" required>
+    <label for="password">Password</label>
+    <input id="password" type="password" placeholder="Password" required>
+    <button onclick="login()">Login</button>
+    <p id="msg" class="msg"></p>
 </div>
 
 <!-- DASHBOARD -->
 <div id="dashboard" style="display:none;">
+    <div class="topbar">
+        <h2>Dashboard</h2>
+        <button onclick="logout()">Logout</button>
+    </div>
 
-<div class="topbar">
-<h2>Dashboard</h2>
-<button onclick="logout()">Logout</button>
-</div>
+    <div class="nav">
+        <button onclick="showSection('customers')">Customers</button>
+        <button onclick="showSection('leads')">Leads</button>
+        <button onclick="showSection('addCustomer')">Add Customer</button>
+        <button onclick="showSection('addLead')">Add Lead</button>
+        <button onclick="showSection('invoice')">Invoices</button>
+    </div>
 
-<!-- NAV -->
-<div class="nav">
-<button onclick="showSection('customers')">Customers</button>
-<button onclick="showSection('leads')">Leads</button>
-<button onclick="showSection('addCustomer')">Add Customer</button>
-<button onclick="showSection('addLead')">Add Lead</button>
-<button onclick="showSection('invoice')">Invoices</button>
-</div>
+    <!-- CUSTOMERS -->
+    <div id="customers" class="section">
+        <h3>Customers</h3>
+        <button onclick="loadCustomers()">Refresh</button>
+        <div id="customerTable"></div>
+    </div>
 
-<!-- CUSTOMERS -->
-<div id="customers" class="section">
-<h3>Customers</h3>
-<button onclick="loadCustomers()">Refresh</button>
-<div id="customerTable"></div>
-</div>
+    <!-- LEADS -->
+    <div id="leads" class="section" style="display:none;">
+        <h3>Leads</h3>
+        <button onclick="loadLeads()">Refresh</button>
+        <div id="leadTable"></div>
+    </div>
 
-<!-- LEADS -->
-<div id="leads" class="section" style="display:none;">
-<h3>Leads</h3>
-<button onclick="loadLeads()">Refresh</button>
-<div id="leadTable"></div>
-</div>
+    <!-- ADD CUSTOMER -->
+    <div id="addCustomer" class="section" style="display:none;">
+        <h3>Add Customer</h3>
+        <input id="c_fn" placeholder="First Name" required>
+        <input id="c_ln" placeholder="Last Name" required>
+        <input id="c_phone" placeholder="Phone" required>
+        <input id="c_email" placeholder="Email">
+        <input id="c_address" placeholder="Address">
+        <input id="c_city" placeholder="City">
+        <input id="c_state" placeholder="State">
+        <input id="c_zip" placeholder="Zip">
+        <input id="c_service" placeholder="Service">
+        <input id="c_plan" placeholder="Plan">
+        <input id="c_freq" placeholder="Frequency">
+        <input id="c_price" placeholder="Price">
+        <button onclick="addCustomer()">Save Customer</button>
+    </div>
 
-<!-- ADD CUSTOMER -->
-<div id="addCustomer" class="section" style="display:none;">
-<h3>Add Customer</h3>
+    <!-- ADD LEAD -->
+    <div id="addLead" class="section" style="display:none;">
+        <h3>Add Lead</h3>
+        <input id="l_name" placeholder="Name" required>
+        <input id="l_phone" placeholder="Phone" required>
+        <input id="l_email" placeholder="Email" required>
+        <input id="l_address" placeholder="Address">
+        <input id="l_city" placeholder="City">
+        <input id="l_state" placeholder="State">
+        <input id="l_zip" placeholder="Zip">
+        <input id="l_rep" placeholder="Assigned Rep">
+        <button onclick="addLead()">Save Lead</button>
+    </div>
 
-<input id="c_fn" placeholder="First Name">
-<input id="c_ln" placeholder="Last Name">
-<input id="c_phone" placeholder="Phone">
-<input id="c_email" placeholder="Email">
-<input id="c_address" placeholder="Address">
-<input id="c_city" placeholder="City">
-<input id="c_state" placeholder="State">
-<input id="c_zip" placeholder="Zip">
-
-<input id="c_service" placeholder="Service">
-<input id="c_plan" placeholder="Plan">
-<input id="c_freq" placeholder="Frequency">
-<input id="c_price" placeholder="Price">
-
-<button onclick="addCustomer()">Save Customer</button>
-</div>
-
-<!-- ADD LEAD -->
-<div id="addLead" class="section" style="display:none;">
-<h3>Add Lead</h3>
-
-<input id="l_name" placeholder="Name">
-<input id="l_phone" placeholder="Phone">
-<input id="l_email" placeholder="Email">
-<input id="l_address" placeholder="Address">
-<input id="l_city" placeholder="City">
-<input id="l_state" placeholder="State">
-<input id="l_zip" placeholder="Zip">
-<input id="l_rep" placeholder="Assigned Rep">
-
-<button onclick="addLead()">Save Lead</button>
-</div>
-
-<!-- INVOICE -->
-<div id="invoice" class="section" style="display:none;">
-<h3>Create Invoice</h3>
-
-<input id="inv_customer" placeholder="Customer ID">
-<input id="inv_job" placeholder="Job ID">
-<input id="inv_amount" placeholder="Amount">
-
-<button onclick="createInvoice()">Generate Invoice</button>
-</div>
-
+    <!-- INVOICE -->
+    <div id="invoice" class="section" style="display:none;">
+        <h3>Create Invoice</h3>
+        <input id="inv_customer" placeholder="Customer ID" required>
+        <input id="inv_job" placeholder="Job ID" required>
+        <input id="inv_amount" placeholder="Amount" required>
+        <button onclick="createInvoice()">Generate Invoice</button>
+    </div>
 </div>
 
 <script src="app.js"></script>
